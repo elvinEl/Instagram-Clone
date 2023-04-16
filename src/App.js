@@ -1,8 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRef } from "react";
+import Input from "components/Input";
+import { AiFillFacebook } from "react-icons/ai";
 
 function App() {
   const ref = useRef();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const enable = username && password;
 
   useEffect(() => {
     let images = ref.current.querySelectorAll("img");
@@ -30,9 +36,8 @@ function App() {
   }, [ref]);
 
   return (
-    <div className="h-full w-full flex justify-center gap-x-8 items-center">
-      
-      <div className="w-[380px] h-[581px] bg-logo-pattern relative bg-[length:468.32px_634.15px] bg-[top_left_-46px]">
+    <div className="h-full w-full flex-wrap overflow-auto flex justify-center gap-x-8 items-center">
+      <div className="hidden md:block w-[380px] h-[581px] bg-logo-pattern relative bg-[length:468.32px_634.15px] bg-[top_left_-46px]">
         <div
           className="w-[250px] h-[551px] absolute top-[27px] right-[18px]"
           ref={ref}
@@ -60,29 +65,64 @@ function App() {
         </div>
       </div>
 
-      <div className="w-[350px] bg-white border-[1px] px-[40px] pt-6 pb-2">
-        <a href="#" className="flex justify-center mb-8">
-          <img className="h-[51px]" src="/assets/login/insta_logo.jpg" alt="" />
-        </a>
-        <form className="grid gap-y-1.5">
-          <label className="block relative">
-            <input type="text" required={true} className="bg-zinc-50 outline-none focus:border-gray-500 border-gray-300 px-2 text-xs  border rounded-sm w-full h-[38px] valid:pt-[10px] peer " />
-            <small className="absolute top-1/2 left-2 cursor-text pointer-events-none  text-gray-500 text-xs -translate-y-1/2 transition-all peer-valid:text-[10px] peer-valid:top-2.5">Phone number, username or email </small>
-          </label>
-          <label className="block relative">
-            <input type="password" required={true} className="bg-zinc-50 outline-none focus:border-gray-500 border-gray-300 px-2 text-xs  border rounded-sm w-full h-[38px] valid:pt-[10px] peer " />
-            <small className="absolute top-1/2 left-2 cursor-text pointer-events-none  text-gray-500 text-xs -translate-y-1/2 transition-all peer-valid:text-[10px] peer-valid:top-2.5">Password</small>
-          </label>
-          <button type="submit" disabled={true} className="bg-[#4db5f9] font-medium text-white rounded-[8px] h-[30px] text-sm disabled:opacity-50">Log In</button>
-        
-        <div className="flex items-center">
-          <div className="h-px bg-gray-400"/>
-          <span className="px-4">Or</span>
-          <div className="h-px bg-gray-400"/>
+      <div className="w-[350px] grid gap-y-3">
+        <div className="bg-white border-[1px] px-[40px] pt-6 pb-2">
+          <a href="#" className="flex justify-center mb-8">
+            <img
+              className="h-[51px]"
+              src="/assets/login/insta_logo.jpg"
+              alt=""
+            />
+          </a>
+          <form className="grid gap-y-1.5">
+            <Input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              label=" Phone number, username or email"
+            />
+            <Input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              label="Password"
+            />
+            <button
+              type="submit"
+              disabled={!enable}
+              className="bg-[#4db5f9] mt-1 font-medium text-white rounded-[8px] h-[30px] text-sm disabled:opacity-50"
+            >
+              Log In
+            </button>
 
+            <div className="flex items-center">
+              <div className="h-px bg-gray-300 flex-1" />
+              <span className="px-4 text-[13px] text-gray-500">Or</span>
+              <div className="h-px bg-gray-300 flex-1" />
+            </div>
+            <div>
+              <a
+                href="#"
+                className="flex justify-center items-center gap-2 text-sm font-semibold text-[#4267B2]"
+              >
+                <AiFillFacebook size={20} />
+                Log in with Facebook
+              </a>
+              <a
+                href="#"
+                className="text-xs text-[#787295] mt-2 flex items-center justify-center"
+              >
+                Forgot password?
+              </a>
+            </div>
+          </form>
         </div>
-        
-        </form>
+
+        <div className="bg-white border-[1px] p-4 text-center text-sm">
+        Don't have an account yet? <a href="#" className="text-semibold text-[">Register</a>
+
+
+          </div>
       </div>
     </div>
   );
